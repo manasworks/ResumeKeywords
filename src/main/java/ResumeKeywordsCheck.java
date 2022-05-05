@@ -66,6 +66,8 @@ public class ResumeKeywordsCheck {
         System.out.print("\nMissing keywords:");
         System.err.println(missingKeywords);
 
+        System.err.println("\nTotal resume words count: "+words.length);
+
     }
 
     public static String convertTextFileToString(String fileName) {
