@@ -31,6 +31,18 @@ public class ResumeKeywordsCheck {
                 "Software Development Life Cycle", "SDLC", "Software Test Life Cycle", "STLC", "Defect Life Cycle", "BLC",
                 "Agile/Scrum", "Waterfall", "Sprint Planning Meeting", "Daily Standup Meeting", "Sprint Review Meeting",
                 "Sprint Retrospective", "Sprint Demo", "Extent-Reports", "HTML reports", "Cucumber JSON reports"));
+        /**
+         * Buzzwords from https://www.thebalancecareers.com/resume-buzzwords-to-avoid-1287368
+         */
+        List<String> buzzwords = new ArrayList<>(Arrays.asList("Extensive experience", "Innovative", "Motivated", "Results-oriented",
+                "Dynamic", "Proven track record", "Team player", "Fast-paced", "Problem solver", "Entrepreneurial", "Best-in-Breed",
+                "Best-in-Class", "Bottom-Line Oriented", "Client Focused", "Creative Thinker", "Cutting Edge", "Detail Oriented",
+                "Driven Professional", "Dynamic", "Entrepreneurial", "Evangelist", "Extensive Experience", "Fast Paced", "Go-To Person",
+                "Goal Oriented", "Guru", "Highly Skilled", "Innovative", "Motivated", "Multi-Tasker", "Out-of-the-Box", "Perfectionist",
+                "Proactive", "Problem Solver", "Proven Track Record", "Quality Driven", "Quick Learner", "Results-Oriented", "Road Warrior",
+                "Seasoned Professional", "Self-Starter", "Skill Set", "Strategic Thinker", "Strong Work Ethic", "Team Player", "Tiger Team",
+                "Trustworthy", "Value Add", "Works Well Under Pressure", "Works Well With Others"));
+
 
         String[] words = resume.replaceAll("\\p{Punct}", "").toLowerCase().split("\\s+");
         Map<String, Integer> allWords = new HashMap<>();
@@ -40,7 +52,6 @@ public class ResumeKeywordsCheck {
         }
 
         Map allWordsSorted = sort(allWords);
-
         Map<String, Integer> map = new HashMap<>();
         List<String> missingKeywords = new ArrayList<>();
 
@@ -54,19 +65,32 @@ public class ResumeKeywordsCheck {
             else missingKeywords.add(keyword);
         }
 
+        Map<String, Integer> buzzMap = new HashMap<>();
+        String resumeLower=resume.toLowerCase();
+        for (String keyword : buzzwords) {
+            int count = 0, fromIndex = 0;
+            while ((fromIndex = resumeLower.indexOf(keyword.toLowerCase(), fromIndex)) != -1 ){
+                count++;
+                fromIndex++;
+            }
+            if (count>0) buzzMap.put(keyword, count);
+        }
+
         Map sorted = sort(map);
+        Map buzzs = sort(buzzMap);
+
+
 
         System.out.println(allWordsSorted);
-        System.out.println("======================================================\n");
-
+        System.out.println("======================================================");
+        System.out.print("Buzzwords found: ");
+        System.out.println(buzzs);
+        System.out.println("======================================================");
         System.out.print("Keywords found: ");
         System.out.println(sorted);
-
-
         System.out.print("\nMissing keywords:");
         System.err.println(missingKeywords);
-
-        System.err.println("\nTotal resume words count: "+words.length);
+        System.err.println("\nTotal resume words count: "+words.length+"\nTotal buzzword to avoid found: "+buzzs.size());
 
     }
 
