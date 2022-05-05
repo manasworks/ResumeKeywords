@@ -1,4 +1,4 @@
-# Small project to check keywords for QA or SDET.
+# Small project to check keywords in resume for QA or SDET.
 
 - Software Development Engineer in Test (SDET)
 - Java (at least 8 times or more)
